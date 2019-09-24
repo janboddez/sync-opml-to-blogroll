@@ -46,7 +46,7 @@ class Sync_OPML_Blogroll {
 	 */
 	public function activate() {
 		if ( false === wp_next_scheduled( 'sync_opml_blogroll' ) ) {
-			wp_schedule_event( time(), 'daily', 'sync_opml_blogroll' );
+			wp_schedule_event( time() + 900, 'hourly', 'sync_opml_blogroll' );
 		}
 	}
 
