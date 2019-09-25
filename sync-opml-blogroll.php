@@ -62,7 +62,14 @@ class Sync_OPML_Blogroll {
 	 */
 	public function sync() {
 		// Fetch settings.
-		$options = get_option( 'sync_opml_blogroll_settings', array() );
+		$options = get_option(
+			'sync_opml_blogroll_settings',
+			array(
+				'url'      => '',
+				'username' => '',
+				'password' => '',
+			)
+		);
 
 		if ( empty( $options['url'] ) ) {
 			// Nothing to do.
@@ -72,7 +79,11 @@ class Sync_OPML_Blogroll {
 
 		$args = array();
 
-		if ( isset( $options['username'] ) && isset( $options['password'] ) ) {
+		if ( defined( 'SYNC_OPML_BLOGROLL_PASS' ) ) {
+		    $options['password'] = SYNC_OPML_BLOGROLL_PASS;
+		}
+
+		if ( '' !== $options['username'] && '' !== $options['password'] ) {
 			error_log( 'Using Basic Authentication.' );
 
 			$args = array(
