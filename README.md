@@ -4,7 +4,7 @@ Keep your WordPress blogroll in sync with your feed reader.
 ## Instructions
 Install, activate, and head over to *Settings > Sync OPML to Blogroll* to tell WordPress about your OPML endpoint of choice.
 
-Supports basic authentication as used by, e.g., Miniflux. Username and password fields may be left blank if not applicable. (Note: currently, your username and password are saved to WordPress's database in plaintext format.)
+Supports basic authentication as used by, e.g., Miniflux. Username and password fields may be left blank if not applicable. (Note: unless you manually add a `SYNC_OPML_BLOGROLL_PASS` constant to `wp-config.php`, your password is saved to WordPress's database in plaintext format.)
 
 For a feed to be picked up, it requires both a valid site URL and a valid feed link, though most if not all feed readers will take care of that for you.
 
