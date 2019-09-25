@@ -32,33 +32,39 @@ class Sync_OPML_Blogroll {
 	 * Register hooks and settings.
 	 */
 	public function __construct() {
+		// Schedule a recurring cron job.
 		register_activation_hook( __FILE__, array( $this, 'activate' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
+
+		// Enable WordPress's link manager.
+		add_filter( 'pre_option_link_manager_enabled', '__return_true' );
 
 		// Register settings page.
 		new Options_Handler();
 
+		// Inform our cron job about its callback function.
 		add_action( 'sync_opml_blogroll', array( $this, 'sync' ) );
 	}
 
 	/**
-	 * Schedules the sync event.
+	 * Runs on activation.
 	 */
 	public function activate() {
+		// Schedule a daily cron job, starting 15 minutes from plugin activation.
 		if ( false === wp_next_scheduled( 'sync_opml_blogroll' ) ) {
-			wp_schedule_event( time() + 900, 'hourly', 'sync_opml_blogroll' );
+			wp_schedule_event( time() + 900, 'daily', 'sync_opml_blogroll' );
 		}
 	}
 
 	/**
-	 * Unschedules any cron jobs.
+	 * Runs on deactivation.
 	 */
 	public function deactivate() {
 		wp_clear_scheduled_hook( 'sync_opml_blogroll' );
 	}
 
 	/**
-	 * Syncing callback.
+	 * Syncs bookmarks to an online OPML feed list.
 	 */
 	public function sync() {
 		// Fetch settings.
