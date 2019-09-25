@@ -74,8 +74,12 @@ class Options_Handler {
 			$this->options['username'] = $settings['username'];
 		}
 
-		if ( isset( $settings['password'] ) ) {
-			$this->options['password'] = $settings['password'];
+		if ( ! defined( 'SYNC_OPML_BLOGROLL_PASS' ) ) {
+			if ( isset( $settings['password'] ) ) {
+				$this->options['password'] = $settings['password'];
+			}
+		} else {
+			$this->options['password'] = '';
 		}
 
 		// Updated settings.
@@ -107,7 +111,7 @@ class Options_Handler {
 					</tr>
 					<tr valign="top">
 						<th scope="row"><label for="sync_opml_blogroll_settings[password]"><?php esc_html_e( 'Password', 'sync-opml-blogroll' ); ?></label></th>
-						<td><input type="text" id="sync_opml_blogroll_settings[password]" name="sync_opml_blogroll_settings[password]" style="min-width: 33%;" value="<?php echo esc_attr( $this->options['password'] ); ?>" />
+						<td><input type="text" id="sync_opml_blogroll_settings[password]" name="sync_opml_blogroll_settings[password]" style="min-width: 33%;" value="<?php echo esc_attr( ( ! defined( 'SYNC_OPML_BLOGROLL_PASS' ) ? $this->options['password'] : '' ) ); ?>" <?php echo ( defined( 'SYNC_OPML_BLOGROLL_PASS' ) ? 'disabled="disabled" ' : '' ); ?>/>
 						<p class="description"><?php esc_html_e( 'Your feed reader&rsquo;s password, should it require Basic Authentication. Leave blank if not applicable.', 'sync-opml-blogroll' ); ?></p></td>
 					</tr>
 				</table>
