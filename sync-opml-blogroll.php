@@ -80,7 +80,7 @@ class Sync_OPML_Blogroll {
 		$args = array();
 
 		if ( defined( 'SYNC_OPML_BLOGROLL_PASS' ) ) {
-		    $options['password'] = SYNC_OPML_BLOGROLL_PASS;
+			$options['password'] = SYNC_OPML_BLOGROLL_PASS;
 		}
 
 		if ( '' !== $options['username'] && '' !== $options['password'] ) {
