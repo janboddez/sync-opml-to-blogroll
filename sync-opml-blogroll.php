@@ -145,11 +145,11 @@ class Sync_OPML_Blogroll {
 				error_log( "Adding bookmark '" . $feed['feed'] . "'" );
 				wp_insert_link(
 					array(
-						'link_name'        => $feed['name'],
-						'link_url'         => $feed['url'],
+						'link_name'        => sanitize_text_field( $feed['name'] ),
+						'link_url'         => filter_var( $feed['url'], FILTER_VALIDATE_URL ),
 						// 'link_target'   => $feed['target'],
-						'link_rss'         => $feed['feed'],
-						'link_description' => sanitize_text_field( $feed['description'] ),
+						'link_rss'         => filter_var( $feed['feed'], FILTER_VALIDATE_URL ),
+						'link_description' => sanitize_textarea_field( $feed['description'] ),
 					)
 				);
 			} else {
