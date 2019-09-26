@@ -41,7 +41,7 @@ class Options_Handler {
 		add_options_page(
 			__( 'Sync OPML to Blogroll', 'sync-opml-blogroll' ),
 			__( 'Sync OPML to Blogroll', 'sync-opml-blogroll' ),
-			'manage_options',
+			'manage_links',
 			'sync-opml-blogroll',
 			array( $this, 'settings_page' )
 		);
@@ -66,10 +66,6 @@ class Options_Handler {
 	 * @return array           Options to be stored.
 	 */
 	public function sanitize_settings( $settings ) {
-		if ( ! current_user_can( 'manage_links' ) ) {
-			 return $this->options;
-		}
-
 		if ( isset( $settings['url'] ) && wp_http_validate_url( $settings['url'] ) ) {
 			$this->options['url'] = esc_url_raw( $settings['url'] );
 		}
