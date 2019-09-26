@@ -25,3 +25,5 @@ This plugin explicitly enables the WordPress Links Manager that's disabled by de
 While feeds that are deleted from your reader and thus OPML endpoint will also be deleted from WordPress, existing WordPress bookmarks *without a feed link* are left alone.
 
 Names, categories and even site URLs can be edited after feeds are imported, and changes will not be overwritten by future sync actions. (That also means that name changes on your feed reader's end will not affect WordPress links. This plugin, in fact, only looks at feed URLs to determine what to do.)
+
+"Syncing," by the way, only works in one direction: *from* your OPML endpoint *to* your WordPress blogroll.
