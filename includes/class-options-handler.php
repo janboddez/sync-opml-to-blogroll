@@ -14,7 +14,7 @@ class Options_Handler {
 	/**
 	 * Plugin options.
 	 *
-	 * @var   array $options
+	 * @var array $options
 	 */
 	private $options = array();
 
@@ -24,6 +24,7 @@ class Options_Handler {
 	public function __construct() {
 		$this->options = get_option(
 			'sync_opml_blogroll_settings',
+			// Fallback settings if none exist, yet.
 			array(
 				'url'      => '',
 				'username' => '',
@@ -101,21 +102,27 @@ class Options_Handler {
 				<table class="form-table">
 					<tr valign="top">
 						<th scope="row"><label for="sync_opml_blogroll_settings[url]"><?php esc_html_e( 'OPML URL', 'sync-opml-blogroll' ); ?></label></th>
-						<td><input type="text" id="sync_opml_blogroll_settings[url]" name="sync_opml_blogroll_settings[url]" style="min-width: 33%;" value="<?php echo esc_attr( $this->options['url'] ); ?>" />
-						<p class="description"><?php esc_html_e( 'The URL to your feed reader&rsquo;s OPML endpoint.', 'sync-opml-blogroll' ); ?></p></td>
+						<td>
+							<input type="text" id="sync_opml_blogroll_settings[url]" name="sync_opml_blogroll_settings[url]" style="min-width: 33%;" value="<?php echo esc_attr( $this->options['url'] ); ?>" />
+							<p class="description"><?php esc_html_e( 'The URL to your feed reader&rsquo;s OPML endpoint.', 'sync-opml-blogroll' ); ?></p>
+						</td>
 					</tr>
 					<tr valign="top">
 						<th scope="row"><label for="sync_opml_blogroll_settings[username]"><?php esc_html_e( 'Username', 'sync-opml-blogroll' ); ?></label></th>
-						<td><input type="text" id="sync_opml_blogroll_settings[username]" name="sync_opml_blogroll_settings[username]" style="min-width: 33%;" value="<?php echo esc_attr( $this->options['username'] ); ?>" />
-						<p class="description"><?php esc_html_e( 'Your feed reader&rsquo;s username, should it require Basic Authentication. Leave blank if not applicable.', 'sync-opml-blogroll' ); ?></p></td>
+						<td>
+							<input type="text" id="sync_opml_blogroll_settings[username]" name="sync_opml_blogroll_settings[username]" style="min-width: 33%;" value="<?php echo esc_attr( $this->options['username'] ); ?>" />
+							<p class="description"><?php esc_html_e( 'Your feed reader&rsquo;s username, should it require Basic Authentication. Leave blank if not applicable.', 'sync-opml-blogroll' ); ?></p>
+						</td>
 					</tr>
 					<tr valign="top">
 						<th scope="row"><label for="sync_opml_blogroll_settings[password]"><?php esc_html_e( 'Password', 'sync-opml-blogroll' ); ?></label></th>
-						<td><input type="text" id="sync_opml_blogroll_settings[password]" name="sync_opml_blogroll_settings[password]" style="min-width: 33%;" value="<?php echo esc_attr( ( ! defined( 'SYNC_OPML_BLOGROLL_PASS' ) ? $this->options['password'] : '' ) ); ?>" <?php echo ( defined( 'SYNC_OPML_BLOGROLL_PASS' ) ? 'disabled="disabled" ' : '' ); ?>/>
-						<p class="description"><?php esc_html_e( 'Your feed reader&rsquo;s password, should it require Basic Authentication. Leave blank if not applicable.', 'sync-opml-blogroll' ); ?></p></td>
+						<td>
+							<input type="password" id="sync_opml_blogroll_settings[password]" name="sync_opml_blogroll_settings[password]" style="min-width: 33%;" value="<?php echo esc_attr( ( ! defined( 'SYNC_OPML_BLOGROLL_PASS' ) ? $this->options['password'] : '' ) ); ?>" <?php echo ( defined( 'SYNC_OPML_BLOGROLL_PASS' ) ? 'disabled="disabled" ' : '' ); ?>/>
+							<p class="description"><?php esc_html_e( 'Your feed reader&rsquo;s password, should it require Basic Authentication. Leave blank if not applicable.', 'sync-opml-blogroll' ); ?></p>
+						</td>
 					</tr>
 				</table>
-				<p class="submit"><?php submit_button( __( 'Save Changes' ), 'primary', 'submit', false ); ?></p>
+				<p class="submit"><?php submit_button( __( 'Save Changes', 'sync-opml-blogroll' ), 'primary', 'submit', false ); ?></p>
 			</form>
 		</div>
 		<?php

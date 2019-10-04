@@ -9,10 +9,12 @@ namespace Sync_OPML_Blogroll;
 
 /**
  * Dead-simple OPML parser.
+ *
+ * Borrows heavily from WordPress's own OPML importer.
  */
 class OPML_Parser {
 	/**
-	 * Feeds found after parsing.
+	 * After OPML's been parsed, will hold the feed list.
 	 *
 	 * @var array $feeds
 	 */
@@ -21,26 +23,29 @@ class OPML_Parser {
 	/**
 	 * Parses an OPML file.
 	 *
-	 * @param string $opml OPML string.
+	 * @param  string $opml OPML string.
+	 * @return array        List of feeds.
 	 */
 	public function parse( $opml ) {
-		// Create an XML parser.
 		if ( ! function_exists( 'xml_parser_create' ) ) {
-			trigger_error( __( "PHP's XML extension is not available. Please contact your hosting provider to enable PHP's XML extension." ) );
-			wp_die( __( "PHP's XML extension is not available. Please contact your hosting provider to enable PHP's XML extension." ) );
+			error_log( __( "PHP's XML extension is not available. Please contact your hosting provider to enable PHP's XML extension." ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log,WordPress.Security.EscapeOutput.OutputNotEscaped
+			return array();
 		}
 
+		// Create an XML parser.
 		$xml_parser = xml_parser_create();
 
 		// Set the functions to handle opening and closing tags.
 		xml_set_element_handler( $xml_parser, array( $this, 'startElement' ), array( $this, 'endElement' ) );
 
 		if ( ! xml_parse( $xml_parser, $opml, true ) ) {
-			printf(
-				/* translators: 1: Error message, 2: Line number. */
-				__( 'XML Error: %1$s at line %2$s' ),
-				xml_error_string( xml_get_error_code( $xml_parser ) ),
-				xml_get_current_line_number( $xml_parser )
+			error_log( // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+				sprintf(
+					/* translators: 1: Error message, 2: Line number. */
+					__( 'XML Error: %1$s at line %2$s' ),
+					xml_error_string( xml_get_error_code( $xml_parser ) ),
+					xml_get_current_line_number( $xml_parser )
+				)
 			);
 		}
 
