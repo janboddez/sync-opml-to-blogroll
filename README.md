@@ -21,6 +21,11 @@ If you've previously filled out and saved the password field, and only recently 
 ### Links Manager
 This plugin explicitly enables the WordPress Links Manager that's disabled by default since version 3.5. No need for other Links Manager plugins that do the same.
 
+### Sync Rate
+This plugin'll attempt to fetch and process your OPML once daily, starting 15 minutes after it is first installed. It will also 'force sync' immediately after it is first configured or settings are changed. (Not merely saved, but *changed*.) This might take a while for really large feeds.
+
+If you really need full control of cron actions, you'll probably want to look into something like [WP-Crontrol](https://wordpress.org/plugins/wp-crontrol/). (Note: not for novices!)
+
 ### On "Syncing"
 While feeds that are deleted from your reader and thus OPML endpoint will also be deleted from WordPress, existing WordPress bookmarks *without a feed link* are left alone.
 
