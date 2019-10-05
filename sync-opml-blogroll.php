@@ -1,13 +1,14 @@
 <?php
 /**
- * Plugin Name: Sync OPML to Blogroll
- * Description: Keep your blogroll in sync with your feed reader.
- * Author:      Jan Boddez
- * Author URI:  https://janboddez.tech/
- * License:     GNU General Public License v3
- * License URI: http://www.gnu.org/licenses/gpl-3.0.html
- * Text Domain: sync-opml-blogroll
- * Version:     0.2
+ * Plugin Name:       Sync OPML to Blogroll
+ * GitHub Plugin URI: https://github.com/janboddez/sync-opml-blogroll
+ * Description:       Keep your blogroll in sync with your feed reader.
+ * Author:            Jan Boddez
+ * Author URI:        https://janboddez.tech/
+ * License:           GNU General Public License v3
+ * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
+ * Text Domain:       sync-opml-blogroll
+ * Version:           0.3
  *
  * @author  Jan Boddez <jan@janboddez.be>
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0

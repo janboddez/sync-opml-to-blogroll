@@ -33,6 +33,8 @@ class Sync_OPML_Blogroll {
 		// Sync after settings are either first added or updated.
 		add_action( 'add_option_sync_opml_blogroll_settings', array( $this, 'sync' ) );
 		add_action( 'update_option_sync_opml_blogroll_settings', array( $this, 'sync' ) );
+
+		add_action( 'admin_head', array( $this, 'links_manager_css' ) );
 	}
 
 	/**
@@ -148,6 +150,20 @@ class Sync_OPML_Blogroll {
 				);
 			}
 		}
+	}
+
+	/**
+	 * Cleans up the Links Manager a bit, visually.
+	 */
+	public function links_manager_css() {
+		?>
+		<style type="text/css">
+		#post-body-content .stuffbox .inside {
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+		</style>
+		<?php
 	}
 
 	/**
