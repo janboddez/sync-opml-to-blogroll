@@ -2,7 +2,7 @@
 Keep your WordPress blogroll in sync with your feed reader.
 
 ## Instructions
-Install, activate, and head over to *Settings > Sync OPML to Blogroll* to tell WordPress about your OPML endpoint of choice.
+Install, activate, and head over to *Settings > Sync OPML to Blogroll* to tell WordPress about your OPML endpoint of choice. (E.g., Miniflux's endpoint usually looks like this: https://your.miniflux.site/v1/export. Other feed readers typically expose OPML documents in a similar manner.)
 
 For a feed to be picked up, it requires both a valid site URL and a valid feed link, though most if not all feed readers will take care of that for you.
 
