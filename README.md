@@ -6,7 +6,7 @@ Install, activate, and head over to *Settings > Sync OPML to Blogroll* to tell W
 
 For a feed to be picked up, it requires both a valid site URL and a valid feed link, though most if not all feed readers will take care of that for you.
 
-Syncs **once daily**. Importing categories is not supported (yet).
+Syncs **once daily**. Importing categories is optional and in a somewhat experimental phase.
 
 ## Basic Authentication
 Supports basic authentication as used by, e.g., Miniflux. Username and password fields may be left blank if not applicable. **Note:** unless you manually add a `SYNC_OPML_BLOGROLL_PASS` constant to `wp-config.php` (see below), your password is saved to WordPress's database in plaintext format. (That's basic authentication for you, unfortunately.)
@@ -18,8 +18,11 @@ define( 'SYNC_OPML_BLOGROLL_PASS', 'your-password-here' );
 If you've previously filled out and saved the password field, and only recently added above constant, simply visit *Settings > Sync OPML to Blogroll* and hit Save Changes to wipe your password from the database.
 
 ## Remarks
-### Links Manager
-This plugin explicitly enables the WordPress Links Manager that's disabled by default since version 3.5. No need for other Links Manager plugins that do the same.
+### Link Manager
+This plugin explicitly enables the WordPress Link Manager that's disabled by default since version 3.5. No need for other Link Manager plugins that do the same.
+
+### Categories
+Importing categories is optional and disabled by default. OPML 2.0 and hierarchical categories are **not** supported. If you find categories are wrongly assigned, you may want to simply disable this option (and, if necessary, define and set categories manually).
 
 ### Sync Rate
 This plugin'll attempt to fetch and process your OPML once daily, starting 15 minutes after it is first installed. It will also 'force sync' immediately after it is first configured or settings are changed. (Not merely saved, but *changed*.) This might take a while for really large feeds.
