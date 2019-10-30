@@ -34,7 +34,7 @@ class Sync_OPML_Blogroll {
 		add_action( 'add_option_sync_opml_blogroll_settings', array( $this, 'sync' ) );
 		add_action( 'update_option_sync_opml_blogroll_settings', array( $this, 'sync' ) );
 
-		add_action( 'admin_head', array( $this, 'links_manager_css' ) );
+		add_action( 'admin_head', array( $this, 'link_manager_css' ) );
 	}
 
 	/**
@@ -178,9 +178,9 @@ class Sync_OPML_Blogroll {
 	}
 
 	/**
-	 * Cleans up the Links Manager a bit, visually.
+	 * Cleans up the Link Manager a bit, visually.
 	 */
-	public function links_manager_css() {
+	public function link_manager_css() {
 		?>
 		<style type="text/css">
 		#post-body-content .stuffbox .inside {
