@@ -64,9 +64,10 @@ class Sync_OPML_Blogroll {
 			'sync_opml_blogroll_settings',
 			// Fallback settings if none exist, yet.
 			array(
-				'url'      => '',
-				'username' => '',
-				'password' => '',
+				'url'                => '',
+				'username'           => '',
+				'password'           => '',
+				'categories_enabled' => false,
 			)
 		);
 
@@ -107,7 +108,7 @@ class Sync_OPML_Blogroll {
 		}
 
 		$parser = new OPML_Parser();
-		$feeds  = $parser->parse( $response['body'] );
+		$feeds  = $parser->parse( $response['body'], (bool) $options['categories_enabled'] );
 
 		// `$feeds` should contain a multidimensional array.
 		if ( empty( $feeds ) || ! is_array( $feeds ) ) {
@@ -136,18 +137,42 @@ class Sync_OPML_Blogroll {
 
 		foreach ( $feeds as $feed ) {
 			if ( ! in_array( $feed['feed'], $bookmark_feeds, true ) && false !== filter_var( $feed['url'], FILTER_VALIDATE_URL ) && false !== filter_var( $feed['feed'], FILTER_VALIDATE_URL ) ) {
+				$term_id = null;
+
+				if ( '' !== $feed['category'] ) {
+					// A link category was set. Let's try to find it.
+					$name = sanitize_text_field( $feed['category'] );
+					$slug = sanitize_title( $feed['category'] );
+					$term = term_exists( $slug, 'link_category' );
+
+					if ( ! isset( $term['term_id'] ) ) {
+						// Create it.
+						$term = wp_insert_term( $name, 'link_category', array( 'slug' => $slug ) );
+					}
+
+					if ( isset( $term['term_id'] ) ) {
+						// Success!
+						$term_id = $term['term_id'];
+					}
+				}
+
 				// Add (valid) OPML links not already present in WordPress.
-				wp_insert_link(
-					array(
-						'link_name'        => sanitize_text_field( $feed['name'] ),
-						'link_url'         => $feed['url'], // Validated above.
-						// Not sure if `target` is ever used. Skip for now.
-						// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-						// 'link_target'   => $feed['target'],
-						'link_rss'         => $feed['feed'], // Validated above.
-						'link_description' => sanitize_textarea_field( $feed['description'] ),
-					)
+				$args = array(
+					'link_name'        => sanitize_text_field( $feed['name'] ),
+					'link_url'         => $feed['url'], // Validated above.
+					// Not sure if `target` is ever used. Skip for now.
+					// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
+					// 'link_target'   => $feed['target'],
+					'link_rss'         => $feed['feed'], // Validated above.
+					'link_description' => sanitize_textarea_field( $feed['description'] ),
 				);
+
+				if ( isset( $term_id ) ) {
+					// Add the category ID.
+					$args['link_category'] = $term_id;
+				}
+
+				wp_insert_link( $args );
 			}
 		}
 	}

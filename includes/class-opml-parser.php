@@ -14,23 +14,40 @@ namespace Sync_OPML_Blogroll;
  */
 class OPML_Parser {
 	/**
-	 * After OPML's been parsed, will hold the feed list.
+	 * After the OPML document's been parsed, will hold the feed list.
 	 *
 	 * @var array $feeds
 	 */
 	private $feeds = array();
 
 	/**
+	 * If categories should be imported.
+	 *
+	 * @var bool $categories_enabled
+	 */
+	private $categories_enabled = '';
+
+	/**
+	 * Category "iterator."
+	 *
+	 * @var string $current_category
+	 */
+	private $current_category = '';
+
+	/**
 	 * Parses an OPML file.
 	 *
-	 * @param  string $opml OPML string.
-	 * @return array        List of feeds.
+	 * @param  string $opml               OPML string.
+	 * @param  bool   $categories_enabled If categories should be imported.
+	 * @return array                      List of feeds.
 	 */
-	public function parse( $opml ) {
+	public function parse( $opml, $categories_enabled = false ) {
 		if ( ! function_exists( 'xml_parser_create' ) ) {
 			error_log( __( "PHP's XML extension is not available. Please contact your hosting provider to enable PHP's XML extension." ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log,WordPress.Security.EscapeOutput.OutputNotEscaped
 			return array();
 		}
+
+		$this->categories_enabled = $categories_enabled;
 
 		// Create an XML parser.
 		$xml_parser = xml_parser_create();
@@ -87,16 +104,22 @@ class OPML_Parser {
 			}
 
 			if ( empty( $url ) || empty( $attrs['XMLURL'] ) ) {
-				// Skip.
+				// Not a feed. Category?
+				if ( '' !== $name && $this->categories_enabled ) {
+					$this->current_category = $name;
+				}
+
+				// Continue.
 				return;
 			}
 
 			$this->feeds[] = array(
 				'name'        => $name,
 				'url'         => $url,
-				'target'      => isset( $attrs['TARGET'] ) ? $attrs['TARGET'] : '',
-				'feed'        => isset( $attrs['XMLURL'] ) ? $attrs['XMLURL'] : '',
-				'description' => isset( $attrs['DESCRIPTION'] ) ? $attrs['DESCRIPTION'] : '',
+				'target'      => ( isset( $attrs['TARGET'] ) ? $attrs['TARGET'] : '' ),
+				'feed'        => ( isset( $attrs['XMLURL'] ) ? $attrs['XMLURL'] : '' ),
+				'description' => ( isset( $attrs['DESCRIPTION'] ) ? $attrs['DESCRIPTION'] : '' ),
+				'category'    => ( '' !== $this->current_category ? $this->current_category : '' ),
 			);
 		}
 	}

@@ -26,9 +26,10 @@ class Options_Handler {
 			'sync_opml_blogroll_settings',
 			// Fallback settings if none exist, yet.
 			array(
-				'url'      => '',
-				'username' => '',
-				'password' => '',
+				'url'                => '',
+				'username'           => '',
+				'password'           => '',
+				'categories_enabled' => false,
 			)
 		);
 
@@ -80,7 +81,15 @@ class Options_Handler {
 				$this->options['password'] = $settings['password'];
 			}
 		} else {
+			// Clear password, as it is defined elsewhere.
 			$this->options['password'] = '';
+		}
+
+		if ( isset( $settings['categories_enabled'] ) && '1' === $settings['categories_enabled'] ) {
+			// Categories enabled.
+			$this->options['categories_enabled'] = true;
+		} else {
+			$this->options['categories_enabled'] = false;
 		}
 
 		// Updated settings.
@@ -117,8 +126,15 @@ class Options_Handler {
 					<tr valign="top">
 						<th scope="row"><label for="sync_opml_blogroll_settings[password]"><?php esc_html_e( 'Password', 'sync-opml-blogroll' ); ?></label></th>
 						<td>
-							<input type="password" id="sync_opml_blogroll_settings[password]" name="sync_opml_blogroll_settings[password]" style="min-width: 33%;" value="<?php echo esc_attr( ( ! defined( 'SYNC_OPML_BLOGROLL_PASS' ) ? $this->options['password'] : '' ) ); ?>" <?php echo ( defined( 'SYNC_OPML_BLOGROLL_PASS' ) ? 'disabled="disabled" ' : '' ); ?>/>
+							<input type="password" id="sync_opml_blogroll_settings[password]" name="sync_opml_blogroll_settings[password]" style="min-width: 33%;" value="<?php echo esc_attr( ( ! defined( 'SYNC_OPML_BLOGROLL_PASS' ) ? $this->options['password'] : '' ) ); ?>" <?php echo ( defined( 'SYNC_OPML_BLOGROLL_PASS' ) ? 'disabled="disabled"' : '' ); ?> />
 							<p class="description"><?php esc_html_e( 'Your feed reader&rsquo;s password, should it require Basic Authentication. Leave blank if not applicable.', 'sync-opml-blogroll' ); ?></p>
+						</td>
+					</tr>
+					<tr valign="top">
+						<th scope="row"><?php esc_html_e( '(Experimental) Enable Categories', 'sync-opml-blogroll' ); ?></th>
+						<td>
+							<label><input type="checkbox" name="sync_opml_blogroll_settings[categories_enabled]" value="1" <?php checked( $this->options['categories_enabled'] ); ?> /> <?php esc_html_e( 'Enabled', 'sync-opml-blogroll' ); ?></label>
+							<p class="description"><?php esc_html_e( 'Import categories, too?', 'sync-opml-blogroll' ); ?></p>
 						</td>
 					</tr>
 				</table>
