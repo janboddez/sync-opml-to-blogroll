@@ -193,7 +193,7 @@ class Sync_OPML_Blogroll {
 
 	/**
 	 * Tiny helper function to decode only ampersands. (WordPress returns
-	 * encoded feed links, while the OPML does not.)
+	 * encoded feed links, while OPML does not.)
 	 *
 	 * @param  string $str Possibly encoded string.
 	 * @return string      Decoded string.
