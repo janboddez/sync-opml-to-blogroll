@@ -25,7 +25,7 @@ class OPML_Parser {
 	 *
 	 * @var bool $categories_enabled
 	 */
-	private $categories_enabled = '';
+	private $categories_enabled = false;
 
 	/**
 	 * Category "iterator."
