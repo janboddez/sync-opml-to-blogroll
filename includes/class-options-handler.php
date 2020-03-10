@@ -16,7 +16,13 @@ class Options_Handler {
 	 *
 	 * @var array $options
 	 */
-	private $options = array();
+	private $options = array(
+		'url'                => '',
+		'username'           => '',
+		'password'           => '',
+		'blacklist'          => '',
+		'categories_enabled' => false,
+	);
 
 	/**
 	 * Constructor.
@@ -24,13 +30,7 @@ class Options_Handler {
 	public function __construct() {
 		$this->options = get_option(
 			'sync_opml_blogroll_settings',
-			// Fallback settings if none exist, yet.
-			array(
-				'url'                => '',
-				'username'           => '',
-				'password'           => '',
-				'categories_enabled' => false,
-			)
+			$this->options
 		);
 
 		add_action( 'admin_menu', array( $this, 'create_menu' ) );
@@ -76,13 +76,18 @@ class Options_Handler {
 			$this->options['username'] = $settings['username'];
 		}
 
-		if ( ! defined( 'SYNC_OPML_BLOGROLL_PASS' ) ) {
-			if ( isset( $settings['password'] ) ) {
-				$this->options['password'] = $settings['password'];
-			}
+		if ( isset( $settings['password'] ) && ! defined( 'SYNC_OPML_BLOGROLL_PASS' ) ) {
+			$this->options['password'] = $settings['password'];
 		} else {
 			// Clear password, as it is defined elsewhere.
 			$this->options['password'] = '';
+		}
+
+		if ( isset( $settings['blacklist'] ) ) {
+			// Normalize line endings.
+			$blacklist = preg_replace( '~\R~u', "\r\n", $settings['blacklist'] );
+
+			$this->options['blacklist'] = trim( $blacklist );
 		}
 
 		if ( isset( $settings['categories_enabled'] ) && '1' === $settings['categories_enabled'] ) {
@@ -128,6 +133,13 @@ class Options_Handler {
 						<td>
 							<input type="password" id="sync_opml_blogroll_settings[password]" name="sync_opml_blogroll_settings[password]" style="min-width: 33%;" value="<?php echo esc_attr( ( ! defined( 'SYNC_OPML_BLOGROLL_PASS' ) ? $this->options['password'] : '' ) ); ?>" <?php echo ( defined( 'SYNC_OPML_BLOGROLL_PASS' ) ? 'disabled="disabled"' : '' ); ?> />
 							<p class="description"><?php esc_html_e( 'Your feed reader&rsquo;s password, should it require Basic Authentication. Leave blank if not applicable.', 'sync-opml-blogroll' ); ?></p>
+						</td>
+					</tr>
+					<tr valign="top">
+						<th scope="row"><label for="sync_opml_blogroll_settings[blacklist]"><?php esc_html_e( 'Blacklist', 'sync-opml-blogroll' ); ?></label></th>
+						<td>
+							<textarea id="sync_opml_blogroll_settings[blacklist]" name="sync_opml_blogroll_settings[blacklist]" style="min-width: 33%;" rows="6"><?php echo ( ! empty( $this->options['blacklist'] ) ? esc_html( $this->options['blacklist'] ) : '' ); ?></textarea>
+							<p class="description"><?php esc_html_e( 'Feed URLs that contain any of these strings&mdash;one per line, please&mdash;will be ignored.', 'sync-opml-blogroll' ); ?></p>
 						</td>
 					</tr>
 					<tr valign="top">

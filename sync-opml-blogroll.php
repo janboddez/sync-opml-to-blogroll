@@ -8,7 +8,7 @@
  * License:           GNU General Public License v3
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain:       sync-opml-blogroll
- * Version:           1.0
+ * Version:           1.1
  *
  * @author  Jan Boddez <jan@janboddez.be>
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
@@ -29,4 +29,4 @@ require_once dirname( __FILE__ ) . '/includes/class-options-handler.php';
 require_once dirname( __FILE__ ) . '/includes/class-sync-opml-blogroll.php';
 
 // Instantiate main plugin class.
-new Sync_OPML_Blogroll();
+Sync_OPML_Blogroll::get_instance();

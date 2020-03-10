@@ -14,12 +14,32 @@ namespace Sync_OPML_Blogroll;
  */
 class Sync_OPML_Blogroll {
 	/**
+	 * This plugin's single instance.
+	 *
+	 * @var Fediverse_Icons_Jetpack $instance Plugin instance.
+	 */
+	private static $instance;
+
+	/**
+	 * Returns the single instance of this class.
+	 *
+	 * @return Fediverse_Icons_Jetpack Single class instance.
+	 */
+	public static function get_instance() {
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+
+	/**
 	 * Registers hooks and settings.
 	 */
 	public function __construct() {
 		// Schedule a recurring cron job.
-		register_activation_hook( __FILE__, array( $this, 'activate' ) );
-		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
+		register_activation_hook( dirname( dirname( __FILE__ ) ) . '/sync-opml-blogroll.php', array( $this, 'activate' ) );
+		register_deactivation_hook( dirname( dirname( __FILE__ ) ) . '/sync-opml-blogroll.php', array( $this, 'deactivate' ) );
 
 		// Enable WordPress's link manager.
 		add_filter( 'pre_option_link_manager_enabled', '__return_true' );
@@ -67,6 +87,7 @@ class Sync_OPML_Blogroll {
 				'url'                => '',
 				'username'           => '',
 				'password'           => '',
+				'blacklist'          => '',
 				'categories_enabled' => false,
 			)
 		);
@@ -93,17 +114,18 @@ class Sync_OPML_Blogroll {
 		}
 
 		// Fetch the OPML file.
-		$response = wp_remote_request( esc_url_raw( $options['url'] ), $args );
+		$response = wp_remote_get( esc_url_raw( $options['url'] ), $args );
 
 		if ( is_wp_error( $response ) ) {
 			// Something went wrong.
-			error_log( __( 'Fetching the OPML failed: ', 'sync-opml-blogroll' ) . $response->get_error_message() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			/* translators: %s: error message */
+			error_log( sprintf( __( 'Fetching the OPML failed: %s', 'sync-opml-blogroll' ), $response->get_error_message() ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			return;
 		}
 
 		if ( empty( $response['body'] ) ) {
 			// The response body is somehow empty.
-			error_log( 'Something went wrong trying to fetch the OPML.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			error_log( __( 'No valid OPML found.', 'sync-opml-blogroll' ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			return;
 		}
 
@@ -112,7 +134,7 @@ class Sync_OPML_Blogroll {
 
 		// `$feeds` should contain a multidimensional array.
 		if ( empty( $feeds ) || ! is_array( $feeds ) ) {
-			error_log( 'No feeds found.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			error_log( __( 'No feeds found.', 'sync-opml-blogroll' ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			return;
 		}
 
@@ -135,7 +157,26 @@ class Sync_OPML_Blogroll {
 			}
 		}
 
+		$blacklist = array();
+
+		if ( ! empty( $options['blacklist'] ) ) {
+			$blacklist = explode( "\n", (string) $options['blacklist'] );
+			$blacklist = array_map(
+				function( $value ) {
+					return trim( $value );
+				},
+				$blacklist
+			);
+		}
+
 		foreach ( $feeds as $feed ) {
+			if ( ! empty( $blacklist ) && str_replace( $blacklist, '', $feed['feed'] ) !== $feed['feed'] ) {
+				// Blacklisted.
+				/* translators: %s: ignored feed URL */
+				error_log( sprintf( __( 'Skipping feed at %s (blacklisted).', 'sync-opml-blogroll' ), $feed['feed'] ) );  // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+				continue;
+			}
+
 			if ( ! in_array( $feed['feed'], $bookmark_feeds, true ) && false !== filter_var( $feed['url'], FILTER_VALIDATE_URL ) && false !== filter_var( $feed['feed'], FILTER_VALIDATE_URL ) ) {
 				$term_id = null;
 
