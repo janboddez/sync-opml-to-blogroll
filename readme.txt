@@ -31,6 +31,8 @@ Licensed under a Creative Commons [Attribution-ShareAlike 3.0 Unported License](
 Source: http://www.opmlicons.com/
 
 == Changelog ==
+= 1.1 =
+Fixed sync, added ability to blacklist feeds.
 
 = 1.0.1 =
 Updated readme.txt.
