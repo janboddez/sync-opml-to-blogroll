@@ -161,12 +161,7 @@ class Sync_OPML_Blogroll {
 
 		if ( ! empty( $options['blacklist'] ) ) {
 			$blacklist = explode( "\n", (string) $options['blacklist'] );
-			$blacklist = array_map(
-				function( $value ) {
-					return trim( $value );
-				},
-				$blacklist
-			);
+			$blacklist = array_map( 'trim', $blacklist );
 		}
 
 		foreach ( $feeds as $feed ) {
