@@ -34,4 +34,10 @@ Thumbs.db
 *.tar
 *.zip
 
+.phpdoc/
+
+docs/
 svn/
+vendor/
+
+.phpunit.result.cache

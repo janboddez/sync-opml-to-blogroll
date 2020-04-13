@@ -1,6 +1,7 @@
 <?php
 /**
  * Plugin Name:       Sync OPML to Blogroll
+ * Plugin URI:        https://janboddez.tech/wordpress/sync-opml-to-blogroll
  * GitHub Plugin URI: https://github.com/janboddez/sync-opml-blogroll
  * Description:       Keep your blogroll in sync with your feed reader.
  * Author:            Jan Boddez
@@ -8,7 +9,7 @@
  * License:           GNU General Public License v3
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain:       sync-opml-blogroll
- * Version:           1.1
+ * Version:           1.2
  *
  * @author  Jan Boddez <jan@janboddez.be>
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
@@ -29,4 +30,5 @@ require_once dirname( __FILE__ ) . '/includes/class-options-handler.php';
 require_once dirname( __FILE__ ) . '/includes/class-sync-opml-blogroll.php';
 
 // Instantiate main plugin class.
-Sync_OPML_Blogroll::get_instance();
+$sync_opml_blogroll = Sync_OPML_Blogroll::get_instance();
+$sync_opml_blogroll->register();

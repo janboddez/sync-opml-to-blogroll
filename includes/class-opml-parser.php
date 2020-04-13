@@ -37,9 +37,10 @@ class OPML_Parser {
 	/**
 	 * Parses an OPML file.
 	 *
-	 * @param  string $opml               OPML string.
-	 * @param  bool   $categories_enabled If categories should be imported.
-	 * @return array                      List of feeds.
+	 * @param string $opml               OPML string.
+	 * @param bool   $categories_enabled If categories should be imported.
+	 *
+	 * @return array List of feeds.
 	 */
 	public function parse( $opml, $categories_enabled = false ) {
 		if ( ! function_exists( 'xml_parser_create' ) ) {
@@ -103,8 +104,8 @@ class OPML_Parser {
 				$url = $attrs['HTMLURL'];
 			}
 
-			if ( empty( $url ) || empty( $attrs['XMLURL'] ) ) {
-				// Not a feed. Category?
+			if ( empty( $url ) && empty( $attrs['XMLURL'] ) ) {
+				// Not a link or feed. Category?
 				if ( '' !== $name && $this->categories_enabled ) {
 					$this->current_category = $name;
 				}
@@ -120,6 +121,7 @@ class OPML_Parser {
 				'feed'        => ( isset( $attrs['XMLURL'] ) ? $attrs['XMLURL'] : '' ),
 				'description' => ( isset( $attrs['DESCRIPTION'] ) ? $attrs['DESCRIPTION'] : '' ),
 				'category'    => ( '' !== $this->current_category ? $this->current_category : '' ),
+				'type'        => ( isset( $attrs['TYPE'] ) ? $attrs['TYPE'] : '' ),
 			);
 		}
 	}

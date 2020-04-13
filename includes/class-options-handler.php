@@ -64,12 +64,17 @@ class Options_Handler {
 	/**
 	 * Handles submitted options.
 	 *
-	 * @param  array $settings Settings as submitted through WP Admin.
-	 * @return array           Options to be stored.
+	 * @param array $settings Settings as submitted through WP Admin.
+	 *
+	 * @return array Options to be stored.
 	 */
 	public function sanitize_settings( $settings ) {
-		if ( isset( $settings['url'] ) && wp_http_validate_url( $settings['url'] ) ) {
-			$this->options['url'] = esc_url_raw( $settings['url'] );
+		if ( isset( $settings['url'] ) ) {
+			if ( '' === $settings['url'] ) {
+				$this->options['url'] = '';
+			} elseif ( wp_http_validate_url( $settings['url'] ) ) {
+				$this->options['url'] = esc_url_raw( $settings['url'] );
+			}
 		}
 
 		if ( isset( $settings['username'] ) ) {
