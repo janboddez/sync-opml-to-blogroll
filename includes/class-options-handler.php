@@ -20,7 +20,7 @@ class Options_Handler {
 		'url'                => '',
 		'username'           => '',
 		'password'           => '',
-		'blacklist'          => '',
+		'denylist'           => '',
 		'categories_enabled' => false,
 	);
 
@@ -88,11 +88,11 @@ class Options_Handler {
 			$this->options['password'] = '';
 		}
 
-		if ( isset( $settings['blacklist'] ) ) {
+		if ( isset( $settings['denylist'] ) ) {
 			// Normalize line endings.
-			$blacklist = preg_replace( '~\R~u', "\r\n", $settings['blacklist'] );
+			$denylist = preg_replace( '~\R~u', "\r\n", $settings['denylist'] );
 
-			$this->options['blacklist'] = trim( $blacklist );
+			$this->options['denylist'] = trim( $denylist );
 		}
 
 		if ( isset( $settings['categories_enabled'] ) && '1' === $settings['categories_enabled'] ) {
@@ -141,9 +141,9 @@ class Options_Handler {
 						</td>
 					</tr>
 					<tr valign="top">
-						<th scope="row"><label for="sync_opml_blogroll_settings[blacklist]"><?php esc_html_e( 'Blacklist', 'sync-opml-blogroll' ); ?></label></th>
+						<th scope="row"><label for="sync_opml_blogroll_settings[denylist]"><?php esc_html_e( 'Denylist', 'sync-opml-blogroll' ); ?></label></th>
 						<td>
-							<textarea id="sync_opml_blogroll_settings[blacklist]" name="sync_opml_blogroll_settings[blacklist]" style="min-width: 33%;" rows="6"><?php echo ( ! empty( $this->options['blacklist'] ) ? esc_html( $this->options['blacklist'] ) : '' ); ?></textarea>
+							<textarea id="sync_opml_blogroll_settings[denylist]" name="sync_opml_blogroll_settings[denylist]" style="min-width: 33%;" rows="6"><?php echo ( ! empty( $this->options['denylist'] ) ? esc_html( $this->options['denylist'] ) : '' ); ?></textarea>
 							<p class="description"><?php esc_html_e( 'Feed URLs that contain any of these strings&mdash;one per line, please&mdash;will be ignored.', 'sync-opml-blogroll' ); ?></p>
 						</td>
 					</tr>

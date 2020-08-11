@@ -1,6 +1,6 @@
 <?php
 
-class Test_Page_Themes extends \WP_Mock\Tools\TestCase {
+class Test_Sync_OPML_Blogroll extends \WP_Mock\Tools\TestCase {
 	public function setUp() : void {
 		\WP_Mock::setUp();
 	}
@@ -14,13 +14,13 @@ class Test_Page_Themes extends \WP_Mock\Tools\TestCase {
 			'url'                => '',
 			'username'           => '',
 			'password'           => '',
-			'blacklist'          => '',
+			'denylist'           => '',
 			'categories_enabled' => false,
 		);
 
 		\WP_Mock::userFunction( 'get_option', array(
-			'times'  => 1,
-			'args'   => array(
+			'times' => 1,
+			'args'  => array(
 				'sync_opml_blogroll_settings',
 				$options,
 			),
@@ -28,8 +28,8 @@ class Test_Page_Themes extends \WP_Mock\Tools\TestCase {
 		) );
 
 		\WP_Mock::userFunction( 'register_deactivation_hook', array(
-			'times'  => 1,
-			'args'   => array(
+			'times' => 1,
+			'args'  => array(
 				dirname( dirname( __FILE__ ) ) . '/sync-opml-blogroll.php',
 				array(
 					\Sync_OPML_Blogroll\Sync_OPML_Blogroll::get_instance(),
@@ -44,8 +44,8 @@ class Test_Page_Themes extends \WP_Mock\Tools\TestCase {
 
 		\WP_Mock::expectActionAdded( 'init', array( $plugin, 'schedule_event' ) );
 		\WP_Mock::expectActionAdded( 'sync_opml_blogroll', array( $plugin, 'sync' ) );
-		\WP_Mock::expectActionAdded( 'add_option_sync_opml_blogroll_settings', array( $plugin, 'sync' ) );
-		\WP_Mock::expectActionAdded( 'update_option_sync_opml_blogroll_settings', array( $plugin, 'sync' ) );
+		\WP_Mock::expectActionAdded( 'add_option_sync_opml_blogroll_settings', array( $plugin, 'trigger_sync' ) );
+		\WP_Mock::expectActionAdded( 'update_option_sync_opml_blogroll_settings', array( $plugin, 'trigger_sync' ) );
 		\WP_Mock::expectActionAdded( 'admin_head', array( $plugin, 'link_manager_css' ) );
 
 		$plugin->register();

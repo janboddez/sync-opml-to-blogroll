@@ -33,6 +33,9 @@ Source: http://www.opmlicons.com/
 == Changelog ==
 Note: Development mostly happens at https://github.com/janboddez/sync-opml-blogroll. Please submit issues there as well.
 
+= 1.3.0 =
+Setting naming.
+
 = 1.2.0 =
 Added support for microformats (HTML) feeds.
 
@@ -40,7 +43,7 @@ Added support for microformats (HTML) feeds.
 Added Plugin URI to plugin header.
 
 = 1.1.0 =
-Fixed sync, added ability to blacklist feeds.
+Fixed sync, added ability to denylist feeds.
 
 = 1.0.1 =
 Updated readme.txt.

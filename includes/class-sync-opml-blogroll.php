@@ -110,7 +110,7 @@ class Sync_OPML_Blogroll {
 					'url'                => '',
 					'username'           => '',
 					'password'           => '',
-					'blacklist'          => '',
+					'denylist'           => '',
 					'categories_enabled' => false,
 				)
 			);
@@ -193,26 +193,30 @@ class Sync_OPML_Blogroll {
 			}
 		}
 
-		$blacklist = array();
+		$denylist = array();
 
-		if ( ! empty( $options['blacklist'] ) ) {
-			$blacklist = explode( "\n", (string) $options['blacklist'] );
-			$blacklist = array_map( 'trim', $blacklist );
+		if ( ! empty( $options['denylist'] ) ) {
+			$denylist = explode( "\n", (string) $options['denylist'] );
+			$denylist = array_map( 'trim', $denylist );
+		} elseif ( ! empty( $options['blacklist'] ) ) {
+			// Legacy setting.
+			$denylist = explode( "\n", (string) $options['blacklist'] );
+			$denylist = array_map( 'trim', $denylist );
 		}
 
 		foreach ( $feeds as $feed ) {
-			if ( ! empty( $blacklist ) ) {
-				if ( str_replace( $blacklist, '', $feed['feed'] ) !== $feed['feed'] ) {
-					// Blacklisted.
+			if ( ! empty( $denylist ) ) {
+				if ( str_replace( $denylist, '', $feed['feed'] ) !== $feed['feed'] ) {
+					// Denylisted.
 					/* translators: %s: ignored feed URL */
-					error_log( sprintf( __( 'Skipping %s (blacklisted).', 'sync-opml-blogroll' ), $feed['feed'] ) );  // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+					error_log( sprintf( __( 'Skipping %s (denylisted).', 'sync-opml-blogroll' ), $feed['feed'] ) );  // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 					continue;
 				}
 
-				if ( str_replace( $blacklist, '', $feed['url'] ) !== $feed['url'] ) {
-					// Blacklisted.
+				if ( str_replace( $denylist, '', $feed['url'] ) !== $feed['url'] ) {
+					// Denylisted.
 					/* translators: %s: ignored site URL */
-					error_log( sprintf( __( 'Skipping %s (blacklisted).', 'sync-opml-blogroll' ), $feed['url'] ) );  // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+					error_log( sprintf( __( 'Skipping %s (denylisted).', 'sync-opml-blogroll' ), $feed['url'] ) );  // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 					continue;
 				}
 			}
