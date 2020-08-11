@@ -143,6 +143,16 @@ class Options_Handler {
 					<tr valign="top">
 						<th scope="row"><label for="sync_opml_blogroll_settings[denylist]"><?php esc_html_e( 'Denylist', 'sync-opml-blogroll' ); ?></label></th>
 						<td>
+							<?php
+							$denylist = '';
+
+							if ( ! empty( $this->options['denylist'] ) ) {
+								$denylist = $this->options['denylist'];
+							} elseif ( ! empty( $this->options['blacklist'] ) ) {
+								// Legacy setting.
+								$denylist = $this->options['blacklist'];
+							}
+							?>
 							<textarea id="sync_opml_blogroll_settings[denylist]" name="sync_opml_blogroll_settings[denylist]" style="min-width: 33%;" rows="6"><?php echo ( ! empty( $this->options['denylist'] ) ? esc_html( $this->options['denylist'] ) : '' ); ?></textarea>
 							<p class="description"><?php esc_html_e( 'Feed URLs that contain any of these strings&mdash;one per line, please&mdash;will be ignored.', 'sync-opml-blogroll' ); ?></p>
 						</td>
