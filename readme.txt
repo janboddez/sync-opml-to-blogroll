@@ -16,7 +16,7 @@ Supports basic authentication as used by, e.g., Miniflux, and offers experimenta
 
 For a feed to be picked up, it requires both a valid site URL and a valid feed link, though most if not all feed readers will take care of that for you.
 
-More details can be found on [this plugin's GitHub page](https://github.com/janboddez/sync-opml-blogroll).
+More details can be found on [this plugin's GitHub page](https://github.com/janboddez/sync-opml-to-blogroll).
 
 == Installation ==
 Within WP Admin, visit *Plugins > Add New* and search for "sync OPML" to locate the plugin. (Alternatively, upload this plugin's ZIP file via the "Upload Plugin" button.)

@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Sync OPML to Blogroll
  * Plugin URI:        https://janboddez.tech/wordpress/sync-opml-to-blogroll
- * GitHub Plugin URI: https://github.com/janboddez/sync-opml-blogroll
+ * GitHub Plugin URI: https://github.com/janboddez/sync-opml-to-blogroll
  * Description:       Keep your blogroll in sync with your feed reader.
  * Author:            Jan Boddez
  * Author URI:        https://janboddez.tech/
