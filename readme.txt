@@ -1,7 +1,7 @@
 === Sync OPML to Blogroll ===
 Contributors: janboddez
 Tags: opml, blogroll, rss, feeds, links, link manager
-Tested up to: 5.4
+Tested up to: 5.5
 License: GNU General Public License v3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
