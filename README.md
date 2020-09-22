@@ -25,9 +25,9 @@ This plugin explicitly enables the WordPress Link Manager that's disabled by def
 Importing categories is optional and disabled by default. OPML 2.0 and hierarchical categories are currently **not** supported. If you find categories are wrongly assigned, you may want to simply disable this option (and, if necessary, define and set categories manually).
 
 ### Sync Rate
-This plugin'll attempt to fetch and process your OPML once a day. It will also 'force sync' immediately after it is first configured or settings are changed. (Not merely saved, but *changed*.) This might take a while for really large feeds.
+This plugin'll attempt to fetch and process your OPML once a day. It will also 'force sync' immediately after it is first configured or settings are changed. (Not merely saved, but *changed*.) Syncing is done in the background.
 
-If you really need full control of cron actions, you'll probably want to look into something like [WP-Crontrol](https://wordpress.org/plugins/wp-crontrol/). (Note: not for novices!)
+If you somehow need full control of cron actions, you'll probably want to look into something like [WP-Crontrol](https://wordpress.org/plugins/wp-crontrol/). (Note: not for novices!)
 
 ### On "Syncing"
 While feeds that are deleted from your reader and thus OPML endpoint will also be deleted from WordPress, existing WordPress bookmarks *without a feed link* are left alone.
