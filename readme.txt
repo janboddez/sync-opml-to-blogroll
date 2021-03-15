@@ -1,7 +1,7 @@
 === Sync OPML to Blogroll ===
 Contributors: janboddez
 Tags: opml, blogroll, rss, feeds, links, link manager
-Tested up to: 5.5
+Tested up to: 5.7
 License: GNU General Public License v3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -33,14 +33,14 @@ Source: http://www.opmlicons.com/
 == Changelog ==
 Note: Development mostly happens at https://github.com/janboddez/sync-opml-blogroll. Please submit issues there as well.
 
+= 1.4.0 =
+Default category option.
+
 = 1.3.0 =
 Setting naming.
 
 = 1.2.0 =
 Added support for microformats (HTML) feeds.
-
-= 1.1.1 =
-Added Plugin URI to plugin header.
 
 = 1.1.0 =
 Fixed sync, added ability to denylist feeds.

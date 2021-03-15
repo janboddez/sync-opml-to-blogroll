@@ -22,6 +22,7 @@ class Options_Handler {
 		'password'           => '',
 		'denylist'           => '',
 		'categories_enabled' => false,
+		'default_category'   => null,
 	);
 
 	/**
@@ -102,6 +103,17 @@ class Options_Handler {
 			$this->options['categories_enabled'] = false;
 		}
 
+		if ( isset( $settings['default_category'] ) ) {
+			// Default category set.
+			$term = term_exists( intval( $settings['default_category'] ), 'link_category' );
+
+			if ( isset( $term['term_id'] ) ) {
+				$this->options['default_category'] = $term['term_id'];
+			} else {
+				$this->options['default_category'] = null;
+			}
+		}
+
 		// Updated settings.
 		return $this->options;
 	}
@@ -158,10 +170,30 @@ class Options_Handler {
 						</td>
 					</tr>
 					<tr valign="top">
-						<th scope="row"><?php esc_html_e( '(Experimental) Enable Categories', 'sync-opml-blogroll' ); ?></th>
+						<th scope="row"><label for="sync_opml_blogroll_settings[default_category]"><?php esc_html_e( 'Default Category', 'sync-opml-blogroll' ); ?></th>
+						<td>
+							<?php
+							$terms = get_terms(
+								array(
+									'taxonomy'   => 'link_category',
+									'hide_empty' => false,
+								)
+							);
+							?>
+							<select name="sync_opml_blogroll_settings[default_category]" id="sync_opml_blogroll_settings[default_category]">
+								<option value=""></option>
+								<?php foreach ( $terms as $term ) : ?>
+									<option value="<?php echo esc_attr( $term->term_id ); ?>" <?php selected( $term->term_id, $this->options['default_category'] ); ?>><?php echo esc_html( $term->name ); ?></option>
+								<?php endforeach; ?>
+							</select>
+							<p class="description"><?php esc_html_e( 'Select a default category. (OPML-defined categories, if enabled below, will override this value!)', 'sync-opml-blogroll' ); ?></p>
+						</td>
+					</tr>
+					<tr valign="top">
+						<th scope="row"><?php esc_html_e( 'Enable Categories', 'sync-opml-blogroll' ); ?></th>
 						<td>
 							<label><input type="checkbox" name="sync_opml_blogroll_settings[categories_enabled]" value="1" <?php checked( $this->options['categories_enabled'] ); ?> /> <?php esc_html_e( 'Enabled', 'sync-opml-blogroll' ); ?></label>
-							<p class="description"><?php esc_html_e( 'Import categories, too?', 'sync-opml-blogroll' ); ?></p>
+							<p class="description"><?php esc_html_e( '(Experimental) Import categories, too?', 'sync-opml-blogroll' ); ?></p>
 						</td>
 					</tr>
 				</table>

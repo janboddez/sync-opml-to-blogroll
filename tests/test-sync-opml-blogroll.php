@@ -16,6 +16,7 @@ class Test_Sync_OPML_Blogroll extends \WP_Mock\Tools\TestCase {
 			'password'           => '',
 			'denylist'           => '',
 			'categories_enabled' => false,
+			'default_category'   => null,
 		);
 
 		\WP_Mock::userFunction( 'get_option', array(

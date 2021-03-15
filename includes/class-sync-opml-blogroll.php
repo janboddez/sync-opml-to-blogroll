@@ -259,6 +259,13 @@ class Sync_OPML_Blogroll {
 					// Success!
 					$term_id = $term['term_id'];
 				}
+			} elseif ( isset( $options['default_category'] ) ) {
+				$term = term_exists( intval( $options['default_category'] ), 'link_category' );
+
+				if ( isset( $term['term_id'] ) ) {
+					// Default category (still) exists. That's good.
+					$term_id = $term['term_id'];
+				}
 			}
 
 			// Add OPML links not already present in WordPress.
