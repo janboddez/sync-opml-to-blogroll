@@ -104,12 +104,12 @@ class Options_Handler {
 		}
 
 		if ( isset( $settings['default_category'] ) ) {
-			// Default category set.
 			$term = term_exists( intval( $settings['default_category'] ), 'link_category' );
 
 			if ( isset( $term['term_id'] ) ) {
 				$this->options['default_category'] = $term['term_id'];
 			} else {
+				// `default_category` is an empty string or otherwise invalid.
 				$this->options['default_category'] = null;
 			}
 		}
