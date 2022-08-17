@@ -16,7 +16,7 @@ class Sync_OPML_Blogroll {
 	/**
 	 * This plugin's single instance.
 	 *
-	 * @var Fediverse_Icons_Jetpack $instance Plugin instance.
+	 * @var Sync_OPML_Blogroll $instance Plugin instance.
 	 */
 	private static $instance;
 
