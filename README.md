@@ -8,14 +8,25 @@ For a feed to be picked up, it requires both a valid site URL and a valid feed l
 
 Syncs **once daily**. Importing categories is optional and in a somewhat experimental phase.
 
-## Basic Authentication
-Supports basic authentication as used by, e.g., Miniflux. Username and password fields may be left blank if not applicable. **Note:** unless you manually add a `SYNC_OPML_BLOGROLL_PASS` constant to `wp-config.php` (see below), your password is saved to WordPress's database in plaintext format. (That's basic authentication for you, unfortunately.)
+### Basic Authentication
+This plugin supports basic authentication as used by, e.g., Miniflux. Username and password fields may be left blank if not applicable. **Note:** unless you manually add a `SYNC_OPML_BLOGROLL_PASS` constant to `wp-config.php` (see below), your password is saved to WordPress's database in plaintext format. (That's basic authentication for you, unfortunately.)
 
 Defining the password in `wp-config.php` rather than storing it in the database is done by adding the following line to `wp-config.php`, just before `/* That's all, stop editing! Happy publishing. */`:
 ```
 define( 'SYNC_OPML_BLOGROLL_PASS', 'your-password-here' );
 ```
 If you've previously filled out and saved the password field, and only recently added above constant, simply visit *Settings > Sync OPML to Blogroll* and hit Save Changes to wipe your password from the database.
+
+### Front-End Usage
+Now, for your links to show up on a page (or in your sidebar, etc.), you're going to have to add them through either WordPress's [`wp_list_bookmarks()`](https://developer.wordpress.org/reference/functions/wp_list_bookmarks/) function, a shortcode (like the one provided by the [Bookmarks Shortcode](https://wordpress.org/plugins/bookmarks-shortcode/) plugin, or a block (like the [Bookmarks block](https://wordpress.org/plugins/blogroll-block/)).
+
+Like, on one of my sites, which has Bookmarks Shortcode installed, I simply use WordPress's core Custom HTML block with the exact following content:
+```
+<ul id="blogroll">[bookmarks title_li='' categorize=0]</ul>
+```
+_Yes, the Custom HTML block accepts shortcodes this way._
+
+I know, it seems rather clunky to have to install yet another plugin (or edit your [child] theme's templates) to actually make this work, and I will provide a built-in alternative in a next version.
 
 ## Remarks
 ### Link Manager
