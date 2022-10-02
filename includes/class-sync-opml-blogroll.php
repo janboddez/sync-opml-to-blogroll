@@ -68,6 +68,9 @@ class Sync_OPML_Blogroll {
 
 		// Minor CSS tweaks.
 		add_action( 'admin_head', array( $this, 'link_manager_css' ) );
+
+		// Register the `bookmarks` shortcode.
+		add_action( 'init', array( '\\Sync_OPML_Blogroll\\Bookmarks_Shortcode', 'register_bookmarks_shortcode' ) );
 	}
 
 	/**
