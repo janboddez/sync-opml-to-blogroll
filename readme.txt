@@ -2,7 +2,7 @@
 Contributors: janboddez
 Tags: opml, blogroll, rss, feeds, links, link manager
 Tested up to: 6.1
-Stable tag: 1.5.0
+Stable tag: 1.6.0
 License: GNU General Public License v3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -34,6 +34,9 @@ After activation, head over to *Settings > Sync OPML to Blogroll* to tell WordPr
 More detailed instructions can be found on [this plugin's GitHub page](https://github.com/janboddez/sync-opml-blogroll).
 
 == Changelog ==
+= 1.6.0 =
+Introduce OPML v2 support.
+
 = 1.5.0 =
 Added bookmarks shortcode.
 

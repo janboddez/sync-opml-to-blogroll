@@ -274,8 +274,8 @@ class Sync_OPML_Blogroll {
 			// Add OPML links not already present in WordPress.
 			$args = array(
 				'link_name'        => sanitize_text_field( $feed['name'] ),
-				'link_rss'         => $feed['feed'], // Validated above.
-				'link_url'         => $feed['url'], // Validated above.
+				'link_rss'         => esc_url_raw( $feed['feed'] ), // Validated above.
+				'link_url'         => esc_url_raw( $feed['url'] ), // Validated above.
 				'link_description' => sanitize_textarea_field( $feed['description'] ),
 				// Not sure if `target` is ever used. Skip for now.
 				// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
@@ -284,7 +284,7 @@ class Sync_OPML_Blogroll {
 
 			if ( isset( $term_id ) ) {
 				// If applicable, add the category ID.
-				$args['link_category'] = $term_id;
+				$args['link_category'] = (int) $term_id;
 			}
 
 			wp_insert_link( $args );
