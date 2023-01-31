@@ -1,10 +1,12 @@
 <?php
 /**
- * Bundles Shea Bunge's Bookmarks Shortcode plugin, released under the MIT
- * license.
+ * Essentially bundles Shea Bunge's wonderful Bookmarks Shortcode plugin,
+ * released under the MIT license.
  *
- * @link    https://github.com/sheabunge/bookmarks-shortcode
- * @license https://opensource.org/licenses/MIT
+ * @author    Shea Bunge
+ * @copyright Copyright (c) 2011 - 2020, Shea Bunge
+ * @link      https://github.com/sheabunge/bookmarks-shortcode
+ * @license   https://opensource.org/licenses/MIT
  *
  * @package Sync_OPML_Blogroll
  */
@@ -34,9 +36,7 @@ class Bookmarks_Shortcode {
 	public static function register_bookmarks_shortcode() {
 		global $shortcode_tags;
 
-		$shortcodes = array( 'bookmarks', 'blogroll', 'links' );
-
-		foreach ( $shortcodes as $shortcode ) {
+		foreach ( array( 'bookmarks', 'blogroll', 'links' ) as $shortcode ) {
 			if ( ! isset( $shortcode_tags[ $shortcode ] ) ) {
 				add_shortcode( $shortcode, array( __CLASS__, 'bookmarks_shortcode' ) );
 			}

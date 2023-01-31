@@ -1,7 +1,8 @@
 === Sync OPML to Blogroll ===
 Contributors: janboddez
 Tags: opml, blogroll, rss, feeds, links, link manager
-Tested up to: 5.7
+Tested up to: 6.1
+Stable tag: 1.5.0
 License: GNU General Public License v3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -16,7 +17,14 @@ Supports basic authentication as used by, e.g., Miniflux, and offers experimenta
 
 For a feed to be picked up, it requires both a valid site URL and a valid feed link, though most if not all feed readers will take care of that for you.
 
+To display the resulting "blogroll" on your site's front end, a `[bookmarks]` shortcode is introduced.
+
 More details can be found on [this plugin's GitHub page](https://github.com/janboddez/sync-opml-to-blogroll).
+
+= Credits =
+Icon, Copyright 2006 OPML Icon Project
+Licensed under a Creative Commons [Attribution-ShareAlike 3.0 Unported License](https://creativecommons.org/licenses/by-sa/3.0/).
+Source: [http://www.opmlicons.com](http://www.opmlicons.com/)
 
 == Installation ==
 Within WP Admin, visit *Plugins > Add New* and search for "sync OPML" to locate the plugin. (Alternatively, upload this plugin's ZIP file via the "Upload Plugin" button.)
@@ -25,13 +33,9 @@ After activation, head over to *Settings > Sync OPML to Blogroll* to tell WordPr
 
 More detailed instructions can be found on [this plugin's GitHub page](https://github.com/janboddez/sync-opml-blogroll).
 
-= Credits =
-Icon, Copyright 2006 OPML Icon Project
-Licensed under a Creative Commons [Attribution-ShareAlike 3.0 Unported License](https://creativecommons.org/licenses/by-sa/3.0/).
-Source: http://www.opmlicons.com/
-
 == Changelog ==
-Note: Development mostly happens at https://github.com/janboddez/sync-opml-blogroll. Please submit issues there as well.
+= 1.5.0 =
+Added bookmarks shortcode.
 
 = 1.4.0 =
 Default category option.

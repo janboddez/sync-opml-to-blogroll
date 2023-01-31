@@ -24,6 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Include required classes.
+require_once dirname( __FILE__ ) . '/includes/class-bookmarks-shortcode.php';
 require_once dirname( __FILE__ ) . '/includes/class-opml-parser.php';
 require_once dirname( __FILE__ ) . '/includes/class-options-handler.php';
 require_once dirname( __FILE__ ) . '/includes/class-sync-opml-blogroll.php';
