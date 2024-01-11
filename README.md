@@ -18,7 +18,7 @@ define( 'SYNC_OPML_BLOGROLL_PASS', 'your-password-here' );
 If you've previously filled out and saved the password field, and only recently added above constant, simply visit *Settings > Sync OPML to Blogroll* and hit Save Changes to wipe your password from the database.
 
 ### Front-End Usage
-Now, for your links to show up on a page (or in your sidebar, etc.), you're going to have to add them through either WordPress's [`wp_list_bookmarks()`](https://developer.wordpress.org/reference/functions/wp_list_bookmarks/) function, or the `bookmarks` shortcode (or a block (like the [Bookmarks block](https://wordpress.org/plugins/blogroll-block/)). Or a widget, if your theme supports them.
+Now, for your links to show up on a page (or in your sidebar, etc.), you're going to have to add them through either WordPress's [`wp_list_bookmarks()`](https://developer.wordpress.org/reference/functions/wp_list_bookmarks/) function, or the `bookmarks` shortcode. Or a block (like the [Bookmarks block](https://wordpress.org/plugins/blogroll-block/)). Or a widget, if your theme supports them.
 
 Like, on one of my sites I simply use WordPress's core Custom HTML block with the exact following content:
 ```
